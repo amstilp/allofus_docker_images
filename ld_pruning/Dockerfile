@@ -1,4 +1,4 @@
-FROM rocker/tidyverse:latest
+FROM rocker/tidyverse:4.4.1
 
 # Install required R packages.
 RUN R -e 'install.packages("igraph")'
