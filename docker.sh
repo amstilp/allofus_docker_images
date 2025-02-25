@@ -17,12 +17,13 @@ while getopts ${OPTSTRING} opt; do
 done
 
 # If pushing, check if the working directory is clean
-if [ "$push" = true ]; then
-  if [ -z "$(git status --porcelain)" ]; then
-    # Working directory clean
-    echo "clean"
-  else
-    # Uncommitted changes
+if [ -z "$(git status --porcelain)" ]; then
+  # Working directory clean
+  commit_hash=`git rev-parse --short HEAD`
+else
+  # Uncommitted changes
+  commit_hash=`git rev-parse --short HEAD`-dirty
+  if [ "$push" = true ]; then
     git status
     echo ""
     echo "Please stash or commit changes before building and pushing the docker image."
@@ -34,7 +35,6 @@ fi
 shift $(($OPTIND - 1))
 
 # Get the commit sha
-commit_hash=`git rev-parse --short HEAD`
 
 # Save the image
 image_name_and_tag="amstilp/aou_$1:$commit_hash"
