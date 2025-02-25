@@ -39,11 +39,11 @@ shift $(($OPTIND - 1))
 # Save the image
 image_name_and_tag="amstilp/aou_$1:$commit_hash"
 
-#docker build --platform linux/amd64 -t $image_name_and_tag $1
+docker build --platform linux/amd64 -t $image_name_and_tag $1
 
 echo "Built $image_name_and_tag"
 
 if [ "$push" = true ]; then
-  #docker push $image_name_and_tag
+  docker push $image_name_and_tag
   echo "Pushed $image_name_and_tag"
 fi
